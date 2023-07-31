@@ -1,0 +1,97 @@
+<section>
+    <form [formGroup]="productForm">
+        <div class="container">
+            <div class="col-6 mb-2">
+                <h3 style="margin-left: -15px;">Add Product Form</h3>
+                <div class="row">
+                    <p style="color: #d8e70a;font-weight: 400;">Dashboard</p><span>/</span>
+                    <p style="color: #d8e70a;font-weight: 600;">Product list</p><span>/</span>
+                    <p style="color: black;font-weight: 600;">Add Product</p>
+                </div>
+            </div>
+            <div class="card shadow">
+                <div class="row p-2" style="justify-content: space-between;">
+                    <div class="col-sm-3">
+                        <label style="font-weight: 600;">Top category</label>
+                        <select (ngModelChange)="selected($event)" class="form-control" name="" formControlName="top_category_id">
+                            <option value="" >select</option>
+                            <option  [value]="category.top_category_id" *ngFor="let category of  cPro;">{{category.top_category_name}}</option>
+                        </select>
+                        <p *ngIf="validation && f['top_category_id'].errors" class="text-danger">Required</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <label style="font-weight: 600;">category</label>
+                        <select (ngModelChange)="Cselected($event)" class="form-control" formControlName="category_id" name="" id="">
+                            <option value="">select</option>
+                            <option [value]="category.category_id" *ngFor="let category of cate;">{{category.category_name}}</option>
+                        </select>
+                        <p *ngIf="validation && f['category_id'].errors" class="text-danger">Required</p>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label style="font-weight: 600;">Sub category</label>
+                        <select class="form-control" formControlName="subcategory_id" name="" id="">
+                            <option value="">select</option>
+                            <option [value]="category.category_id" *ngFor="let category of sub_cate;">{{category.category_name}}</option>
+                        </select>
+                        <p *ngIf="validation && f['subcategory_id'].errors" class="text-danger">Required</p>
+
+                    </div>
+                </div>
+                <div class="row p-2" style="justify-content: space-between;">
+                    <div class="col-sm-3">
+                        <label style="font-weight: 600;">Product Name</label>
+                        <input type="text" name="" formControlName="product_name" class="form-control" id="">
+                        <p *ngIf="validation && f['product_name'].errors" class="text-danger">Required</p>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label style="font-weight: 600;">Quantity</label>
+                        <input type="number" name="" formControlName="quantity" class="form-control" id="">
+                        <p *ngIf="validation && f['quantity'].errors" class="text-danger">Required</p>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label style="font-weight: 600;">Price</label>
+                        <input type="number" name="" formControlName="price" class="form-control" id="">
+                        <p *ngIf="validation && f['price'].errors" class="text-danger">Required</p>
+
+                    </div>
+                </div>
+                <div class="row p-2" style="justify-content: space-between;">
+                    <div class="col-sm-3">
+                        <label style="font-weight: 600;">Description</label>
+                        <textarea name="" class="form-control" formControlName="description" id="" rows="0"></textarea>
+                        <p *ngIf="validation && f['description'].errors" class="text-danger">Required</p>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label style="font-weight: 600;">File</label>
+                        <input type="file" name="" formControlName="file" class="form-control" id="">
+                        <p *ngIf="validation && f['file'].errors" class="text-danger">Required</p>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label style="font-weight: 600;">Image</label>
+                        <input type="file" col="30" name="" formControlName="image" class="form-control" id="">
+                        <p *ngIf="validation && f['image'].errors" class="text-danger">Required</p>
+
+                    </div>
+                </div>
+                <div class="col-sm-3 p-2 ">
+                    <label style="font-weight: 600;">Status</label>
+                    <select name="" class="form-control " formControlName="status" id="">
+                        <option value="" >Select</option>
+                        <option value="1">Active</option>
+                        <option value="2">Inactive</option>
+                    </select>
+                    <p *ngIf="validation && f['status'].errors" class="text-danger">Required</p>
+
+                </div>
+                <div class="col-sm-3 p-2">
+                    <button class="btn-md btn btn-warning" (click)="onSubmit()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

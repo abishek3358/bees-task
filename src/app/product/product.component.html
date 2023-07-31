@@ -1,0 +1,305 @@
+<section>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-6 mb-2">
+                <h3 style="margin-left: -15px;">Product list</h3>
+                <div class="row">
+                    <p style="color: rgb(223, 237, 20);font-weight: 400;">Dashboard</p>
+                    <p style="color: black;font-weight: 600;">/Product list</p>
+                </div>
+            </div>
+
+
+
+            <div class="col-6 mb-2">
+                <div class="text-right" style="margin-right: -70px">
+                    <button class="btn btn-sm btn-success mr-2" routerLink="/home/product-form">Add</button>
+                    <button class="btn btn-sm btn-warning" (click)="filter()">Filter</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-12 stretch-card mb-4" *ngIf="isFilterEnable">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="mb-2">Filters</h4>
+                    <form [formGroup]="filterForm">
+                        <div class="row">
+
+                            <div class="col-md-4 col-sm-12">
+                                <label class="form-label">Top Category</label>
+                                <select (ngModelChange)="selected($event)" class="form-control form-select mb-3" formControlName="top_category_id">
+                        
+                            <option  [value]="category.top_category_id" *ngFor="let category of  cPro;">{{category.top_category_name}}</option>
+
+                          </select>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label class="form-label">Category</label>
+                                <select (ngModelChange)="Cselected($event)" class="form-select form-control form-select mb-3" formControlName="category_id">
+                          
+                            <option [value]="category.category_id" *ngFor="let category of cate;">{{category.category_name}}</option>
+
+                          </select>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label class="form-label">Sub Category</label>
+                                <select class="form-select form-control form-select mb-3" formControlName="subcategory_id">
+                           
+                            <option [value]="category.category_id" *ngFor="let category of sub_cate;">{{category.category_name}}</option>
+
+                          </select>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label class="form-label">Product Name</label>
+                                <input type="text" class="form-control" placeholder="Product Name" formControlName="product_name">
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label class="form-label">Quantity</label>
+                                <input type="text" class="form-control mb-3" placeholder="Quantity" formControlName="quantity">
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label class="form-label">Status</label>
+                                <select class="form-select form-control mb-3" formControlName="status">
+                            <option value="1">Active</option>
+                            <option value="2">Inactive</option>
+                          </select>
+                            </div>
+                            <div class="col-sm-12 mt-3">
+                                <button type="button" class="btn btn-dark mr-2" (click)="filterClear()">Clear</button>
+                                <button type="button" class="btn btn-warning me-2" (click)="filterTable()">Filter</button>
+
+                            </div>
+                            <div class="col-md-12" style="text-align: end;">
+                                <button type="button" (click)="filterClodse()" class="btn btn-danger  mr-2">Close</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="" style="overflow: scroll;width: 1210px;height: 513px;">
+            <div class="">
+                <table class="table " style="width: 1600px;">
+                    <thead>
+                        <tr>
+                            <th>S.no</th>
+                            <th>Image</th>
+                            <th>Product Name</th>
+                            <th>Top Category</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>File</th>
+                            <th>Date Added</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of products;let i=index">
+                            <td>{{i+1}}</td>
+                            <td></td>
+                            <!-- <td>{{product.image_actual}}</td> -->
+                            <td>{{product.product_name}}</td>
+                            <td>{{product.top_category_name}}</td>
+                            <td>{{product.category_name}}</td>
+                            <td>{{product.quantity}}</td>
+                            <td>{{product.price}}</td>
+                            <td class="text-warning">{{product.file_actual}}</td>
+                            <td>{{product.date_added}}</td>
+                            <td><button *ngIf="product.status == 1" class="btn btn-success">Active</button><button *ngIf="product.status == 2" class="btn btn-danger">Inactive</button></td>
+                            <td>
+                                <div class="row" style="    display: flex;
+                                justify-content: space-between;">
+                                    <button class="btn btn-dark text-white" data-toggle="modal" data-target="#statusCenter" (click)="statusChange(product.product_id)"><i
+                                            class="fas fa-circle-check"></i></button>
+                                    <button class="btn btn-dark text-white" data-toggle="modal" data-target="#exampleModalCenter" (click)="viewProduct(product.product_id)"><i
+                                            class="fas fa-eye"></i></button>
+                                    <button class="btn btn-dark text-white" (click)="editProduct(product.product_id)"><i
+                                            class="fas fa-pen"></i></button>
+                                    <button class="btn btn-dark text-white" (click)="deleteProduct(product.product_id)"><i
+                                            class="fas fa-trash"></i></button>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="isStsEnable" class="modal fade" id="statusCenter" tabindex="-1" role="dialog" aria-labelledby="statusModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog custom-modal-dialog " role="document">
+                        <form class="mt-4" [formGroup]="statusForm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="grid-margin stretch-card mt-2">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12 mb-3">
+                                                                        <label for="style_name" style="font-weight: 500;" class="form-label">Top Category</label> - {{Obj.top_category_name}}
+                                                                    </div>
+                                                                    <div class="col-sm-12 mb-3">
+                                                                        <label for="style_name" style="font-weight: 500;" class="form-label">Category</label> - {{Obj.category_name}}
+                                                                    </div>
+                                                                    <div class="col-sm-12 mb-3">
+                                                                        <label for="style_name" style="font-weight: 500;" class="form-label">Product Name</label> - {{Obj.product_name}}
+                                                                    </div>
+                                                                    <div class="col-sm-12 mb-3">
+                                                                        <label for="style_name" style="font-weight: 500;" class="form-label">Quantity</label> - {{Obj.quantity}}
+                                                                    </div>
+                                                                    <div class="col-sm-12 mb-3">
+                                                                        <label for="style_name" style="font-weight: 500;" class="form-label">Price</label> - {{Obj.price}}
+                                                                    </div>
+                                                                    <div class="col-sm-12 mb-3">
+                                                                        <label for="style_name" style="font-weight: 500;" class="form-label">Description</label> - {{Obj.description}}
+
+                                                                    </div>
+                                                                    <div class="col-sm-12 mb-3">
+                                                                        <label for="style_name" style="font-weight: 500;" class="form-label">DateAdded</label> - {{Obj.date_added}}
+                                                                    </div>
+                                                                    <div class="col-sm-12 mb-3">
+                                                                        <label for="style_name" style="font-weight: 500;" class="form-label">Status</label> - <span *ngIf="Obj.status == 1" class='badge bg-success'>Active</span><span *ngIf="obj.status == 2"
+                                                                            class='badge bg-danger'>Inactive</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="row">
+                                                                    <div class="text-center mb-3">
+                                                                        <img src="https://cdn.vectorstock.com/i/preview-1x/48/06/image-preview-icon-picture-placeholder-vector-31284806.jpg">
+                                                                    </div>
+                                                                    <div class="col-sm-12 mb-3">
+                                                                        <label for="style_name" class="form-label">File</label> - <a href="path/fil.pdf">file.pdf</a>
+                                                                        <!-- if file is empty use  N/A-->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 mb-3">
+                                                                            <label for="style_name" class="form-label">Status</label>
+                                                                            <select (ngModelChange)="sele($event)" id="status" class="form-select mb-3" formControlName="status">
+                                                                                <option for="status" value="1">Enabled</option>
+                                                                                <option for="status" value="2">Disabed</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-success" data-dismiss="modal" (click)="updateStatus(Obj.product_id)">Update status</button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="isEnable" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog custom-modal-dialog " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div class="grid-margin stretch-card mt-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 mb-3">
+                                                                <label for="style_name" style="font-weight: 500;" class="form-label">Top Category</label> - {{obj.top_category_name}}
+                                                            </div>
+                                                            <div class="col-sm-12 mb-3">
+                                                                <label for="style_name" style="font-weight: 500;" class="form-label">Category</label> - {{obj.category_name}}
+                                                            </div>
+                                                            <div class="col-sm-12 mb-3">
+                                                                <label for="style_name" style="font-weight: 500;" class="form-label">Product Name</label> - {{obj.product_name}}
+                                                            </div>
+                                                            <div class="col-sm-12 mb-3">
+                                                                <label for="style_name" style="font-weight: 500;" class="form-label">Quantity</label> - {{obj.quantity}}
+                                                            </div>
+                                                            <div class="col-sm-12 mb-3">
+                                                                <label for="style_name" style="font-weight: 500;" class="form-label">Price</label> - {{obj.price}}
+                                                            </div>
+                                                            <div class="col-sm-12 mb-3">
+                                                                <label for="style_name" style="font-weight: 500;" class="form-label">Description</label> - {{obj.description}}
+
+                                                            </div>
+                                                            <div class="col-sm-12 mb-3">
+                                                                <label for="style_name" style="font-weight: 500;" class="form-label">DateAdded</label> - {{obj.date_added}}
+                                                            </div>
+                                                            <div class="col-sm-12 mb-3">
+                                                                <label for="style_name" style="font-weight: 500;" class="form-label">Status</label> - <span *ngIf="obj.status == 1" class='badge bg-success'>Active</span><span *ngIf="obj.status == 2" class='badge bg-danger'>Inactive</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="text-center mb-3">
+                                                                <img src="https://cdn.vectorstock.com/i/preview-1x/48/06/image-preview-icon-picture-placeholder-vector-31284806.jpg">
+                                                            </div>
+                                                            <div class="col-sm-12 mb-3">
+                                                                <label for="style_name" class="form-label">File</label> - <a href="path/fil.pdf">file.pdf</a>
+                                                                <!-- if file is empty use  N/A-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

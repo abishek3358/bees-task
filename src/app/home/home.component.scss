@@ -1,0 +1,108 @@
+.sidebar {
+    background-color: black;
+    height: 600px;
+    justify-content: center;
+}
+
+.content {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 0%;
+    background-size: cover;
+}
+
+.icon {
+    margin: 12px 0px 0px 0px;
+}
+
+li {
+    margin-top: 45px;
+}
+
+.page {
+    position: absolute;
+    width: 1190px;
+    height: 100%;
+}
+
+.links {
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding: 0;
+    gap: 10px;
+}
+
+li::marker {
+    color: transparent;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: rgb(12, 214, 250);
+    font-weight: bolder;
+    transition: -1s;
+}
+
+li:hover {
+    color: rgb(12, 214, 250);
+    font-weight: bolder;
+    transition: -1s;
+}
+
+.header {
+    color: white;
+}
+
+a {
+    display: block;
+    position: relative;
+    padding: 0.5em 0;
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1em;
+    background-color: rgb(247, 4, 4);
+    opacity: 0;
+    transition: opacity 500ms, transform 500ms;
+}
+
+li a::after {
+    opacity: 1;
+    transform: scale(0);
+    transform-origin: center;
+}
+
+li a:hover::after,
+li a:focus::after {
+    transform: scale(1);
+}
+
+.img {
+    border-radius: 50%;
+}
+
+.user {
+    margin-right: 20px;
+}
+
+.logout:hover {
+    background-color: gray;
+    border: 1px solid black;
+    font-weight: bolder;
+    color: black;
+}
+
+.btn-social {
+    border-radius: 50px;
+    width: 40px;
+}
