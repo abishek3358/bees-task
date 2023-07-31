@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 header" style="height:50px; text-align:center; background-color:gray;">
+            <div class="user float-right">
+                <div class="row">
+                    <div class="icon">
+                        <i class="fas fa-bell mr-3" style="color: black;"></i>
+             
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1 sidebar">
+            <ul class="links">
+                <li><a >Dashboard</a></li>
+                <li><a routerLink="product">Products
+
+
+                </a></li>
+              
+                
+            </ul>
+        </div>
+        <div class="col-sm-11 content">
+            <div class="page">
+                <router-outlet></router-outlet>
+                <div class="row">
+                    <div class="col-sm-12" style="text-align:center;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
